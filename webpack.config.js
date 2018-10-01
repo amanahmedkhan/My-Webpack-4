@@ -2,8 +2,11 @@ const
     HtmlWebPackPlugin = require("html-webpack-plugin"),
     MiniCssExtractPlugin = require("mini-css-extract-plugin"),
     VueLoaderPlugin = require("vue-loader/lib/plugin"),
+    OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin"),
+    UglifyJsPlugin = require("uglifyjs-webpack-plugin"),
     path = require('path'),
-    webpack = require("webpack");
+    webpack = require("webpack"),
+    autoprefixer = require("autoprefixer");
 
 module.exports = {
     entry: './app/index.js',
@@ -41,8 +44,9 @@ module.exports = {
             {
                 test: /\.css$/,
                 use: [
-                    MiniCssExtractPlugin.loader, 
-                    "css-loader"
+                    MiniCssExtractPlugin.loader,
+                    "css-loader",
+                    "postcss-loader"
                 ]
             },
             {
@@ -50,6 +54,7 @@ module.exports = {
                 use: [
                     MiniCssExtractPlugin.loader,
                     "css-loader",
+                    "postcss-loader",
                     "sass-loader"
                 ]
             },
@@ -58,9 +63,20 @@ module.exports = {
                 use: [
                     MiniCssExtractPlugin.loader,
                     "css-loader",
+                    "postcss-loader",
                     "stylus-loader"
                 ]
             }
+        ]
+    },
+
+    optimization: {
+        minimizer: [
+            new UglifyJsPlugin({
+                cache: true,
+                parallel: true
+            }),
+            new OptimizeCSSAssetsPlugin({})
         ]
     },
 
@@ -73,6 +89,14 @@ module.exports = {
         new MiniCssExtractPlugin({
             filename: "bundle.min.css",
             chunkFilename: "[id].css"
+        }),
+
+        new webpack.LoaderOptionsPlugin({
+            options: {
+                postcss: [
+                    autoprefixer()
+                ]
+            }
         }),
 
         new VueLoaderPlugin()
