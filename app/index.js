@@ -8,7 +8,6 @@ import style from "./styles/style.scss";
 import demo from "./styles/demo.styl";
 
 // JS
-import './scripts/swiper.min';
 import './scripts/script';
 
 // React

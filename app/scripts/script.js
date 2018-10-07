@@ -1,4 +1,4 @@
-console.log("adasdasd");
+import Swiper from './swiper.min'
 
 var swiper = new Swiper('.swiper-container', {
     navigation: {
