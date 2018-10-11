@@ -2,7 +2,6 @@
 import './index.html';
 
 // CSS
-import swiper from "./styles/swiper.min.css";
 import main from "./styles/main.css";
 import style from "./styles/style.scss";
 import demo from "./styles/demo.styl";
